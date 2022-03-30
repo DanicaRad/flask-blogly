@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block title %}New User Form{% endblock %}
+
+{% block heading %}
+    <h2>Create a user</h2>
+{% endblock %}
+
+{% block content %}
+    <form action="/users/new" method="POST">
+
+        <div class="form-group row justify-content-start">
+            <label for="first_name" class="col-sm-auto col-form-label">First Name</label>
+            <div class="col-sm-auto">
+                <input type="text" name="first_name" id="" class="form-control" placeholder="Enter a first name">
+            </div>
+        </div>
+
+        <div class="form-group row justify-content-start">
+            <label for="last_name" class="col-sm-auto col-form-label">Last Name</label>
+            <div class="col-sm-auto">
+                <input type="text" name="last_name" id="last_name" class="form-control" placeholder="Enter a last name">
+            </div>
+        </div>
+
+        <div class="form-group row justify-content-start">
+            <label for="image_url" class="col-sm-auto col-form-label">Image URL</label>
+            <div class="col-sm-auto">
+                <input type="url" name="image_url" id="image_url" class="form-control" placeholder="Provide an image of user">
+            </div>
+        </div>
+        <button class="btn btn-success btn-sm col-sm-auto">Add</button>
+    </form>
+
+{% endblock %}
