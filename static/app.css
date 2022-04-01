@@ -1,4 +1,4 @@
-#content {
+body {
     margin: 20px 40px;
 }
 
@@ -10,6 +10,14 @@ a {
     margin-bottom: 5px
 }
 
-.btn-md {
-    margin: 10px;
+.btn-md, .btn-sm {
+    margin: 10px 10px 10px 0;
+}
+
+.btn {
+    margin-left: 10px;
+}
+
+.blockquote {
+    margin-bottom: 0px;
 }

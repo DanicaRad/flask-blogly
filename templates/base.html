@@ -10,7 +10,13 @@
 </head>
 <body>
     <main id="content">
-        <a href="/"><h4>Blogly</h4></a>
+
+        <ul class="list-inline mb-1">
+            <li class="list-inline-item h4 text-primary"><a href="/">
+                Blogly</a></li>
+            <li class="list-inline-item h4 text-primary"><a href="/users">Users</a></li>
+        </ul>
+
         {% block heading %}{% endblock %}
 
         {% block content %}{% endblock %}

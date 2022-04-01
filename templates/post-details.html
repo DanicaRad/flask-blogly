@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block title %}{{ post.title }}{% endblock %}
+
+
+{% block content %}
+<div class="row">
+    <div class="col-sm-auto col-6">
+        <h1>{{ post.title }}</h1>
+        <p>{{ post.content }}</p>
+        <cite>By {{ post.author_name }}</cite>
+        <p><small>Posted {{ post.write_date }}</small></p>
+    </div>
+</div>
+
+<form>
+    <a href="/users/{{ post.author }}" 
+            class="btn btn-outline-primary btn-sm">
+            Back</a>
+    <button class="btn btn-primary btn-sm"
+            formaction="/posts/{{ post.id }}/edit"
+            formmethod="GET">Edit
+    </button>
+    <button class="btn btn-danger btn-sm"
+            formaction="/posts/{{ post.id }}/delete"
+            formmethod="POST">Delete
+    </button>
+  </form>
+
+{% endblock %}

@@ -13,7 +13,7 @@
          class="img-fluid">
   </div>
   {% endif %}
-  <div>
+  <div class="col-sm-auto col-6">
       <h1>{{user.full_name}}</h1>
 
       <form>
@@ -26,6 +26,27 @@
                 formmethod="POST">Delete
         </button>
       </form>
+
+    {% if user.posts %}
+    <div class="row">
+        <div class="col-sm-auto col-6">
+            <h2>Posts</h2>
+            <ul>
+            {% for post in user.posts %}
+                <li>
+                <a href="/posts/{{ post.id }}">{{ post.title }}</a>
+                </li>
+            {% endfor %}
+            </ul>
+        </div>
+    </div>
+    {% endif %}
+    
+    <div class="row">
+        <div class="col-sm-auto col-6">
+            <a href="/users/{{ user.id }}/posts/new" class="btn btn-primary btn-sm">Add post</a>
+        </div>
+    </div>
       
   </div>
 </div>
