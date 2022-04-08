@@ -1,7 +1,7 @@
 from unittest import TestCase
 
 from app import app
-from models import db, User, Post, default_image_url
+from models import db, User, Post, Tag, PostTag, default_image_url
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///blogly_test_db'
 app.config['SQLALCHEMY_ECHO'] = False
@@ -19,7 +19,9 @@ class BloglyUserViewsTestCase(TestCase):
     def setUp(self):
         """Add sample user and post."""
 
+        PostTag.query.delete()
         Post.query.delete()
+        Tag.query.delete()
         User.query.delete()
 
         user = User(first_name="Test", last_name="User")
@@ -93,7 +95,9 @@ class BloglyPostViewsTestCase(TestCase):
     def setUp(self):
         """Add sample post and user"""
 
+        PostTag.query.delete()
         Post.query.delete()
+        Tag.query.delete()
         User.query.delete()
 
         user = User(first_name="Test", last_name="User")
@@ -165,3 +169,88 @@ class BloglyPostViewsTestCase(TestCase):
             self.assertEqual(resp.status_code, 200)
             self.assertIn('Edit Post', html)
             self.assertIn('Test Post', html)
+
+class BloglyTagViewsTestCase(TestCase):
+    """Test for views for Blogly posts"""
+
+    def setUp(self):
+        """Add sample post and user"""
+
+        PostTag.query.delete()
+        Post.query.delete()
+        Tag.query.delete()
+        User.query.delete()
+
+        db.session.commit()
+
+        user = User(first_name="Test", last_name="User")
+
+        db.session.add(user)
+        db.session.commit()
+
+        self.user_id = user.id
+        self.user = user
+
+        tag = Tag(name="cool")
+
+        db.session.add(tag)
+        db.session.commit()
+
+        self.tag_id = tag.id
+        self.tags = tag
+
+        post = Post(title="Test Post", content="content", author=f"{self.user_id}")
+
+        db.session.add(post)
+        db.session.commit()
+
+        self.post_id = post.id
+        self.created_at = post.write_date
+        self.post = post
+
+        post_tag = PostTag(post_id=self.post_id, tag_id=self.tag_id)
+
+        db.session.add(post_tag)
+        db.session.commit()
+
+        self.post_tag = post_tag
+
+    def tearDown(self):
+        """Clean up any fouled transactions"""
+
+        db.session.rollback()
+
+    def test_show_tags(self):
+        """Test tag appears on tags list"""
+
+        with app.test_client() as client:
+            resp = client.get('/tags')
+            html = resp.get_data(as_text=True)
+
+            self.assertEqual(resp.status_code, 200)
+            self.assertIn('cool', html)
+
+    def test_add_tag_form(self):
+        """Test view form to add tag"""
+
+        with app.test_client() as client:
+            resp = client.get('/tags/new')
+            html = resp.get_data(as_text=True)
+
+            self.assertEqual(resp.status_code, 200)
+            self.assertIn('Create a Tag', html)
+            self.assertIn('Add', html)
+
+    def test_add_tag(self):
+        """Test adding new tag to db"""
+
+        with app.test_client() as client:
+
+            d = {"name": "test tag"}
+            resp = client.post("/tags/new", data=d, follow_redirects=True)
+            html = resp.get_data(as_text=True)
+
+            self.assertEqual(resp.status_code, 200)
+            self.assertIn('test tag', html)
+
+    

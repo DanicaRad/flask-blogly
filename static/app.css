@@ -14,10 +14,11 @@ a {
     margin: 10px 10px 10px 0;
 }
 
-.btn {
-    margin-left: 10px;
-}
-
 .blockquote {
     margin-bottom: 0px;
+}
+
+.btn-xs {
+    font-size: .875em;
+    padding: .1em .2em;
 }

@@ -11,6 +11,16 @@
         <p><small>Posted {{ post.write_date }}</small></p>
     </div>
 </div>
+<div class="row">
+    <div class="col-sm-auto col-6">
+        <small>
+            <b>Tags: </b>
+            {% for tag in post.tags %}
+            <a href="/tags/{{ tag.id }}" class="btn btn-primary btn-xs">{{ tag.name }}</a>
+            {% endfor %}
+        </small>
+    </div>
+</div>
 
 <form>
     <a href="/users/{{ post.author }}" 

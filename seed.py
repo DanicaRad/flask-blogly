@@ -1,6 +1,6 @@
 """Seed file to make sample db"""
 
-from models import User, Post, db
+from models import User, Post, Tag, db
 from app import app
 
 # Create all tables
@@ -31,3 +31,15 @@ db.session.commit()
 
 db.session.add_all(posts)
 db.session.commit()
+
+tags = [
+    Tag(name="funny"),
+    Tag(name="news"),
+    Tag(name="science"),
+    Tag(name="entertainment"),
+    Tag(name="weird")
+]
+
+db.session.add_all(tags)
+db.session.commit()
+

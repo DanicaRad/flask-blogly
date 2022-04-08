@@ -55,7 +55,7 @@ class Post(db.Model):
 
     created_at = db.Column(db.DateTime, nullable=False, default=f"{datetime.now()}")
 
-    author = db.Column(db.Integer, db.ForeignKey('users.id'))
+    author = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
 
     user = db.relationship('User')
 
@@ -72,3 +72,27 @@ class Post(db.Model):
         d = dt.strftime("%B %d, %Y")
         t = dt.strftime("%-I:%M%p")
         return f"{d} at {t}"
+
+class PostTag(db.Model):
+    """Join Post and Tag models"""
+
+    __tablename__ = "posts_tags"
+
+    post_id = db.Column(db.Integer, db.ForeignKey('posts.id'), primary_key=True)
+
+    tag_id = db.Column(db.Integer, db.ForeignKey('tags.id'), primary_key=True)
+
+class Tag(db.Model):
+    """Create tag model"""
+
+    __tablename__ = "tags"
+
+    def __repr__(self):
+        return f"<id={self.id} name={self.name}"
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+
+    name = db.Column(db.Text, nullable=False, unique=True)
+
+    posts = db.relationship('Post', secondary='posts_tags', cascade='all, delete', backref='tags')
+

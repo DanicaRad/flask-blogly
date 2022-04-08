@@ -1,8 +1,21 @@
 {% extends 'base.html' %}
-{% block title %}Recent Posts{% endblock %}
+{% block title %}All Posts{% endblock %}
 
 {% block content %}
-<h1>Blogly Recent Posts</h1>
+<h1>Blogly All Posts</h1>
+
+<!-- <h3>Filter posts by tag (actually, don't. this doesn't work yet.)</h3>
+<form action="/posts/filter">
+    <div class="form-group row">
+    {% for tag in tags %}
+    <div class="col-sm-auto">
+        <input type="checkbox" name="tag" id="" value="{{ tag.id }}">
+        <label for="tag">{{ tag.name }}</label>
+    </div>
+    {% endfor %}
+    </div>
+    <button type="submit" class="btn btn-outline-primary btn-sm">Filter Posts</button>
+</form> -->
 
 {% for post in posts %}
 <div class="mt-3">
